@@ -23,3 +23,7 @@ npm run test
 ## Tests report
 
 Test report is generated in the folder named `test-results`
+To open last report type in terminal
+```bash
+npm run report
+```
