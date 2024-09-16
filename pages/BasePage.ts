@@ -5,20 +5,20 @@ export class BasePage {
   page: Page | null = null;
 
   async init(): Promise<void> {
-    this.browser = await chromium.launch({ headless: false }); 
-    const context = await this.browser.newContext(); 
-    this.page = await context.newPage(); 
+    this.browser = await chromium.launch({ headless: true });
+    const context = await this.browser.newContext();
+    this.page = await context.newPage();
   }
 
   async close(): Promise<void> {
     if (this.browser) {
-      await this.browser.close(); 
+      await this.browser.close();
     }
   }
 
   async navigateTo(url: string): Promise<void> {
     if (this.page) {
-      await this.page.goto(url); 
+      await this.page.goto(url);
     }
   }
 
@@ -32,6 +32,4 @@ export class BasePage {
       }
     }
   }
-
-
 }
