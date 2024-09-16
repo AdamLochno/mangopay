@@ -9,6 +9,16 @@ export class GooglePage extends BasePage {
     this.url = "https://www.google.com/maps?hl=en";
   }
 
+  locators = {
+    buttonAcceptAll: "button[aria-label='Accept all']",
+    inputSearch: "input#searchboxinput",
+    buttonSearch: "button#searchbox-searchbutton",
+    buttonDirections: "button[data-value='Directions']",
+    inputSearchLocationEnd: "div#directions-searchbox-1 input",
+    inputSearchLocationStart: "div#directions-searchbox-0 input",
+    divRouteInformation: "div#section-directions-trip-0",
+  };
+
   async open(): Promise<void> {
     await this.navigateTo(this.url);
     await this.acceptCookies();
@@ -16,7 +26,7 @@ export class GooglePage extends BasePage {
 
   async acceptCookies(): Promise<void> {
     if (this.page) {
-      await this.page.click('button[aria-label="Accept all"]');
+      await this.page.click(this.locators.buttonAcceptAll);
     } else {
       throw new Error("Page is not initialized.");
     }
@@ -28,18 +38,18 @@ export class GooglePage extends BasePage {
 
   async typeLocation(location: string): Promise<void> {
     if (this.page) {
-      await this.page.fill("input#searchboxinput", location);
+      await this.page.fill(this.locators.inputSearch, location);
     }
   }
 
   async clickEnter(): Promise<void> {
     if (this.page) {
-      await this.page.press("input#searchboxinput", "Enter");
+      await this.page.press(this.locators.inputSearch, "Enter");
     }
   }
   async clickSearch(): Promise<void> {
     if (this.page) {
-      await this.page.press("button#searchbox-searchbutton", "Enter");
+      await this.page.press(this.locators.buttonSearch, "Enter");
     }
   }
 
@@ -50,13 +60,13 @@ export class GooglePage extends BasePage {
   }
   async clickDirections(): Promise<void> {
     if (this.page) {
-      await this.page.click("button[data-value='Directions']");
+      await this.page.click(this.locators.buttonDirections);
     }
   }
   async checkDestination(location: string): Promise<void> {
     if (this.page) {
       const ariaLabel = await this.page
-        .locator("div#directions-searchbox-1 input")
+        .locator(this.locators.inputSearchLocationEnd)
         .getAttribute("aria-label");
 
       if (ariaLabel === null) {
@@ -68,14 +78,14 @@ export class GooglePage extends BasePage {
 
   async typeStartPoint(location: string): Promise<void> {
     if (this.page) {
-      await this.page.fill("div#directions-searchbox-0 input", location);
+      await this.page.fill(this.locators.inputSearchLocationStart, location);
     }
   }
 
   async checkInformationAboutRoute(): Promise<void> {
     if (this.page) {
       await expect(
-        this.page.locator("div#section-directions-trip-0")
+        this.page.locator(this.locators.divRouteInformation)
       ).toBeVisible();
     }
   }
