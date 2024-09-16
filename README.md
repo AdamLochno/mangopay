@@ -1,7 +1,8 @@
 ## Recruitment Task
 
 ## About project
-The project's goal is to present my test writing skills using the TypeSript and the Playwright. The tests are run on the 3 default browsers: chromium, firefox and webkit
+
+The project's goal is to present my test writing skills using the TypeSript and the Playwright. The tests are run on the 1 default browser: chromium.
 
 ## Installation
 
@@ -20,4 +21,5 @@ npm run test
 ```
 
 ## Tests report
+
 Test report is generated in the folder named `test-results`
